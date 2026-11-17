@@ -5,11 +5,12 @@
  * shipping dead links that quietly point nowhere. Fill in a URL below and
  * the icon appears automatically; leave it blank and it stays hidden.
  *
- * The WhatsApp number is a placeholder (all zeros) — replace it with the
- * business number in both `whatsappLink` here and `FloatingButtons.jsx`.
+ * Business contact number used for WhatsApp and click-to-call links.
  */
 
-export const whatsappLink = 'https://wa.me/910000000000';
+export const phoneNumber = '9871165133';
+export const whatsappLink = `https://wa.me/91${phoneNumber}`;
+export const callLink = `tel:+91${phoneNumber}`;
 
 export const socialLinks = [
   { label: 'WhatsApp', href: whatsappLink, external: true },

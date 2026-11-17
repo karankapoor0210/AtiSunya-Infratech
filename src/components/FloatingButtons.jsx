@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { FiChevronUp } from 'react-icons/fi';
-import { whatsappLink } from '../data/social';
+import { FiChevronUp, FiPhone } from 'react-icons/fi';
+import { callLink, whatsappLink } from '../data/social';
 import './FloatingButtons.css';
 
 function FloatingButtons() {
@@ -23,6 +23,14 @@ function FloatingButtons() {
         aria-label="Chat on WhatsApp"
       >
         <FaWhatsapp size={26} />
+      </a>
+
+      <a
+        className="floating-btn floating-btn--call"
+        href={callLink}
+        aria-label="Call AtiSunya Infratech"
+      >
+        <FiPhone size={22} />
       </a>
 
       {visible && (

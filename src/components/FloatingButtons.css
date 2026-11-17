@@ -25,6 +25,11 @@
   background: #25D366;
 }
 
+.floating-btn--call {
+  left: 88px;
+  background: var(--color-dark);
+}
+
 .floating-btn--top {
   right: 26px;
   background: var(--color-dark);

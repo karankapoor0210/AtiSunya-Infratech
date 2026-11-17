@@ -7,18 +7,44 @@ import './ContactForm.css';
 function ContactForm() {
   const [form, setForm] = useState({ name: '', phone: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [cardRef, cardVisible] = useReveal();
 
   const handleChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // No backend is wired up yet — this at least confirms receipt to the
-    // visitor instead of submitting silently. Replace with a real API/email
-    // call before launch.
-    setSubmitted(true);
+    setSending(true);
+    setSubmitError('');
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/vishnudigital20@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          message: form.message || '(No message provided)',
+          _subject: 'New website enquiry - AtiSunya Infratech',
+          _cc: 'atisunyainfratechh@gmail.com',
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok || result.success === 'false') {
+        throw new Error('The enquiry could not be sent. Please try again.');
+      }
+      setSubmitted(true);
+    } catch {
+      setSubmitError('Your enquiry could not be sent. Please try again or contact us by phone.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -105,8 +131,9 @@ function ContactForm() {
                   onChange={handleChange}
                 />
 
-                <button type="submit" className="btn btn-dark contact__submit">
-                  Submit Enquiry
+                {submitError && <p className="contact__subtitle" role="alert">{submitError}</p>}
+                <button type="submit" className="btn btn-dark contact__submit" disabled={sending}>
+                  {sending ? 'Sending…' : 'Submit Enquiry'}
                 </button>
               </form>
             </>
